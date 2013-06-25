@@ -51,7 +51,8 @@ class graphite::config inherits graphite::params {
 		refreshonly => true,
 		notify      => Exec['Chown graphite for apache'],
 		subscribe   => Exec["Install ${::graphite::params::graphiteVersion}"],
-		before      => Exec['Chown graphite for apache'];
+		before      => Exec['Chown graphite for apache'],
+		require     => File['/opt/graphite/webapp/graphite/local_settings.py']
 	}
 
 	# change access permissions for apache
@@ -76,7 +77,6 @@ class graphite::config inherits graphite::params {
 			content => template('graphite/opt/graphite/webapp/graphite/local_settings.py.erb'),
 			require => [
 				Package["${::graphite::params::apache_pkg}"],
-				Exec['Chown graphite for apache']
 			];
 		"${::graphite::params::apache_dir}/ports.conf":
 			ensure  => file,
