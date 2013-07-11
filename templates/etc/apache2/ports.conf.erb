@@ -5,6 +5,9 @@
 # Debian etch). See /usr/share/doc/apache2.2-common/NEWS.Debian.gz and
 # README.Debian.gz
 
+NameVirtualHost *:80
+Listen 80
+
 NameVirtualHost *:<%= scope.lookupvar('graphite::gr_apache_port') %>
 Listen <%= scope.lookupvar('graphite::gr_apache_port') %>
 
